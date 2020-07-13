@@ -170,7 +170,7 @@
           this.title=title_list[4];
         }else if(index=='/customer'){
           this.title=title_list[5];
-        }else if(index=='/order/allorder'
+        }else if(index=='/order/allOrder'
                  || index=='/order/waiting'
                  || index=='/order/created'
                  || index=='/order/copied'

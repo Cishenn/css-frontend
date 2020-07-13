@@ -16,7 +16,7 @@
       </el-menu-item-group>
     </el-menu>
 
-    
+
     <router-view></router-view>
 
   </div>
@@ -29,8 +29,7 @@
   export default{
     data(){
         return{
-    }
-
+        }
     }
   }
 
