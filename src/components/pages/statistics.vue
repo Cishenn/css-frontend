@@ -35,6 +35,10 @@ export default {
     position: fixed;
     display: flex;
   }
+  
+  .el-menu-item.is-active{
+    border-left: solid rgb(0,110,255) 4px;
+  }
 
   .statistics-menu{
     width: 242px;
@@ -44,9 +48,6 @@ export default {
     border-radius: 4px;
   }
 
-  .el-menu-item.is-active{
-    border-left: solid rgb(0,110,255) 4px;
-  }
 
 
 </style>
