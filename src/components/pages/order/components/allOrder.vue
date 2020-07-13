@@ -5,7 +5,7 @@
     <div class="orderTopButton">
       <el-button class="addButton" @click="createWorkOrder()">添加工单</el-button>
       <el-button class="batchButton">批量修改状态</el-button>
-      <el-button class="exportButton">导出工单</el-button>
+      <el-button class="exportButton" @click = "exportData">导出工单</el-button>
     </div>
 
     <div class="orderIndex">
@@ -106,8 +106,8 @@
           <el-table-column label="最后更新时间" prop="latestTime" width="141" align="center"></el-table-column>
           <el-table-column label="操作" prop="opration" width="141" align="center">
             <template slot-scope="scope">
-              <el-button type="text" v-on:click='check' style="color: rgb(0,110,255);padding: 0px;">{{ scope.row.opration1 }}</el-button>
-              <el-button type="text" style="color: rgb(0,110,255);padding: 0px;">{{ scope.row.opration2 }}</el-button>
+              <el-button type="text" v-on:click='check' style="color: rgb(0,110,255);padding: 0px;">查看</el-button>
+              <el-button type="text" style="color: rgb(0,110,255);padding: 0px;">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -240,6 +240,15 @@
         page:null,
         currentPage:1,
         pageSize:10,
+        tableData:null,
+        columns:[
+          {title:'工单ID',key:'id'},
+          {title:'工单标题',key:'title'},
+          {title:'工单渠道',key:'channel'},
+          {title:'工单状态',key:'state'},
+          {title:'客户姓名',key:'customerName'},
+          {title:'最后更新时间',key:'latestTime'},
+        ],
         // tableData: [
         //   {
         //     id: '32533819',
@@ -341,7 +350,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -356,7 +364,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -371,7 +378,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -386,7 +392,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -401,7 +406,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -416,7 +420,6 @@
                                     &nickName=${this.servicerValue}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          console.log(response);
           this.page=response.data
         })
       },
@@ -427,47 +430,44 @@
           .get('/work_order/page')
           .then(response=>{
               console.log(response);
-              this.page=response.data
+              this.page=response.data;
+              this.$emit('sendOrderTotal',response.data.total);
+              this.tableData = response.data.result.WorkOrder;
+              console.log(this.tableData);
           })
       this.$axios
           .get('/work_order/stateOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.statusOptions=response.data.result.ElOption;
             this.statusValue = response.data.result.ElOption[0].value;
           })
       this.$axios
           .get('/work_order/priorityOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.priorityOptions=response.data.result.ElOption;
             this.priorityValue = response.data.result.ElOption[0].value;
           })
       this.$axios
           .get('/work_order/typeOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.categoryOptions=response.data.result.ElOption;
             this.categoryValue = response.data.result.ElOption[0].value;
           })
       this.$axios
           .get('/work_order/channelOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.channelOptions=response.data.result.ElOption;
             this.channelValue = response.data.result.ElOption[0].value;
           })
       this.$axios
           .get('/work_order/servicerOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.servicerOptions=response.data.result.ElOption;
             this.servicerValue = response.data.result.ElOption[0].value;
           })
       this.$axios
           .get('/work_order/groupOptions')
           .then(response=>{
-            console.log(response.data.result.ElOption);
             this.groupOptions=response.data.result.ElOption;
             this.groupValue = response.data.result.ElOption[0].value;
           })
@@ -494,7 +494,6 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-        console.log(this.$refs[formName]);
       },
 
       cancelForm(vis){
@@ -518,8 +517,13 @@
         });
       },
 
+      exportData(){
+        export2Excel(this.columns,this.tableData)
+      }
     }
   }
+
+  import { export2Excel } from '../../../../common/js/util'
 </script>
 
 <style scoped>
