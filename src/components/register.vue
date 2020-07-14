@@ -41,14 +41,17 @@
       data(){
           return{
               comfirm: '',
-              phone: '138',
-              password: '138',
-              veriCodes: 'CRUD',
+              phone: '',
+              password: '',
+              veriCodes: '',
+              rightVericodes: '',
+              errorList: '',
           }
       },
       methods: {
         // 登陆
         register(){
+          if(this.validate()){
           let phone=this.phone;
           let password=this.password;
           let nickName="默认昵称";
@@ -71,7 +74,50 @@
                     type: 'error'
                   })
                 })
+        }
         },
+
+        validate: function () {
+            this.errorList = []
+            if (this.phone == '') {
+              this.errorList.push('请输入手机号码');
+              this.$message.error('请输入手机号码');
+              return
+            } else {
+              if (!(/^[1]([3-9])[0-9]{9}$/.test(this.phone))) {
+                this.errorList.push('请输入有效的手机号码');
+                this.$message.error('请输入有效的手机号码');
+                return 
+              }
+            }
+            if (this.password == '') {
+              this.errorList.push('请输入密码');
+              this.$message.error('请输入密码');
+              return
+            } else {
+              if (this.password.length < 6) {
+                this.errorList.push('密码长度不得少于6位');
+                this.$message.error('密码长度不得少于6位');
+                return
+              }
+            } 
+            if(this.veriCodes == ''){
+              this.errorList.push('请输入验证码');
+              this.$message.error('请输入验证码');
+              return
+            } else{
+              if(this.veriCodes!=this.rightVericodes){
+                this.errorList.push('验证码错误');
+                this.$message.error('验证码错误');
+                this.drawPic();
+                return
+              }
+            }
+      
+            return this.errorList.length <= 0;
+          },
+
+
           // 登陆可能会用到验证码
         randomNum(min, max) {
           return Math.floor(Math.random() * (max - min) + min);
@@ -109,6 +155,8 @@
             ctx.rotate((-deg * Math.PI) / 180);
             ctx.translate(-x, -y);
         }
+        console.log("right vericodes: "+_picTxt);
+        this.rightVericodes=_picTxt;
         for (var i = 0; i < _num; i++) {
             //定义笔触颜色
             ctx.strokeStyle = this.randomColor(90, 180);

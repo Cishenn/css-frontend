@@ -131,7 +131,23 @@
       this.getTitle();
     },
     created(){
-      let jsUser=JSON.parse(localStorage.getItem("user")).result;
+      let jsUser=JSON.parse( localStorage.getItem("user") ).result;
+      console.log("Base")
+      console.log(jsUser)
+      // 更新base界面(主要是右上角客户昵称)的客服信息
+      this.$axios
+          .get('/servicer/'+jsUser.customerServiceId)
+          .then(response=>{
+            console.log("重新请求")
+            console.log(response)
+            if(response.data.success){
+              localStorage.setItem("user",JSON.stringify(response.data));
+            }
+          })
+          .catch(err=>{
+            console.log(err)
+          })
+      jsUser=JSON.parse(localStorage.getItem("user")).result;
       console.log(jsUser);
       this.userName=jsUser.nickName;
       this.avatarUrl=jsUser.avatar;
@@ -154,13 +170,41 @@
           this.title=title_list[4];
         }else if(index=='/customer'){
           this.title=title_list[5];
-        }else if(index=='/order/allorder'){
+        }else if(index=='/order/allOrder'
+                 || index=='/order/waiting'
+                 || index=='/order/created'
+                 || index=='/order/copied'
+                 || index=='/order/dealing'
+                 || index=='/order/finished'){
           this.title=title_list[6];
-        }else if(index=='/statistics/statisticsOverall'){
+        }else if(index=='/statistics/statisticsOverall'
+                 || index=='/statistics/workQuantityStats'
+                 || index=='/statistics/workQualityStats'
+                 || index=='/statistics/checkInStats'
+                 || index=='/statistics/accessStats'){
           this.title=title_list[7];
-        }else if(index=='/settings'){
+        }else if(index=='/settings'
+                 || index=='/settings/personInfo'
+                 || index=='/settings/settingsNotice'
+                 || index=='/settings/companyInfo'
+                 || index=='/settings/servicerManage'
+                 || index=='/settings/groupManage'
+                 || index=='/settings/roleManage'
+                 || index=='/settings/commonWords'
+                 || index=='/settings/autoReply'
+                 || index=='/settings/dialogRule'
+                 || index=='/settings/dialogComment'
+                 || index=='/settings/distributionRule'
+                 || index=='/settings/customerInfo'
+                 || index=='/settings/customerTag'
+                 || index=='/settings/blacklist'
+                 || index=='/settings/baseSettings'
+                 || index=='/settings/orderType'
+                 || index=='/settings/operationLog'
+                 || index=='/settings/messageNotice'){
           this.title=title_list[8];
-        }else if(index=='/specificOrder/replyContent'){
+        }else if(index=='/specificOrder/replyContent'
+                 || index=='/specificOrder/operatingLog'){
           first = '/order';
           this.title=title_list[9];
         }else if(index=='/customerDetail'){
@@ -183,6 +227,9 @@
 
       }
     },
+    update(){
+      
+    }
 
   }
 </script>

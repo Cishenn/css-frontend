@@ -7,7 +7,7 @@
               <form action = "">
                 <h3 class="h3">登录七尾客服云</h3>
                 <div class = "item"><label for = "">账号</label>
-                <input v-model="phone" placeholder="请输入注册时填写的邮箱" type = "text"></div>
+                <input v-model="phone" placeholder="请输入注册时填写的手机号码" type = "text"></div>
                 <div class = "item"><label for = "">密码</label>
                 <input v-model="password" placeholder="请输入密码" type = "password"></div>
                 <div  class = "tip">忘记密码请联系客服人员</div>
@@ -31,19 +31,20 @@
       data(){
           return{
               comfirm: '',
-              phone: '123456',
-              password: '123456',
+              phone: '',
+              password: '',
+              errorList: '',
           }
       },
       methods: {
           // 登陆
           login(){
+            if(this.validate()){
             let phone=this.phone;
             let password=this.password;
             let data = {phone, password}
             console.log("Data-> ")
             console.log(data);
-            console.log("---")
             this.$axios.
                 post('/servicer/login',data) // 注意理解此处 data: data (ES6机制)
                 .then(response=>{
@@ -65,8 +66,36 @@
                         message: '登陆失败',
                         type: 'error'
                     });
-                })              
-          }
+                }) 
+          }             
+          },
+          validate: function () {
+            this.errorList = []
+            if (this.phone == '') {
+              this.errorList.push('请输入手机号码');
+              this.$message.error('请输入手机号码');
+              return
+            } else {
+              if (!(/^[1]([3-9])[0-9]{9}$/.test(this.phone))) {
+                this.errorList.push('请输入有效的手机号码');
+                this.$message.error('请输入有效的手机号码');
+                return 
+              }
+            }
+            if (this.password == '') {
+              this.errorList.push('请输入密码');
+              this.$message.error('请输入密码');
+              return
+            } else {
+              if (this.password.length < 6) {
+                this.errorList.push('密码长度不得少于6位');
+                this.$message.error('密码长度不得少于6位');
+                return
+              }
+            }
+      
+            return this.errorList.length <= 0;
+          },
     },
     created(){
       

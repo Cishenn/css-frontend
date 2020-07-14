@@ -86,14 +86,14 @@ export default {
     data(){
         return{
             welcome: true,
-            welcomeArea: '注意哈, 上面的el-tabs只是做个样子, 回头对接口的时候搞一下',
+            welcomeArea: '',
             noResponse: true,
             noResponseArea: '',
             noResponseNum: 20,
             dialogOver: true,
             servicerOver: '',
             sysOver: '',
-            source: 'website'
+            source: 'website',
         }
     }
 }

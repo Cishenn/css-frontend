@@ -105,7 +105,7 @@
         <el-row :gutter="25">
           <el-col :span="2"></el-col>
           <el-col :span="4"><span class="input-label">联系人号码:</span></el-col>
-          <el-col :span="10"><el-input v-model="tele" placeholder="请输入"></el-input></el-col>
+          <el-col :span="10"><el-input v-model="phone" placeholder="请输入"></el-input></el-col>
         </el-row>
         <br/>
         <el-row :gutter="25">
@@ -122,7 +122,7 @@
         <br/>
       </form>
       <el-divider></el-divider>
-      <el-button type="primary" class="btn">保存</el-button>
+      <el-button @click="doSave" type="primary" class="btn">保存</el-button>
       <br/><br/><br/><br/><br/><br/><br/>
     </div>
   </el-scrollbar>   
@@ -138,13 +138,14 @@ export default {
         dialogVisible: false,
         disabled: false,
         form_data: 'd',
+        logoUrl: '',
         name: '七尾云科技有限公司',
         account: '1339000@163.com',
         industry: '',
         teamScale: '',
         contactName: '杜宇',
-        tele: '17789067899',
-        addr: '',
+        phone: '17789067899',
+        address: '',
         remark: '',
         option_1: [
           {
@@ -192,7 +193,48 @@ export default {
       },
       handleDownload(file) {
         console.log(file);
+      },
+      doSave(){
+        var name=this.name;
+        var account=this.account;
+        var industry=this.industry;
+        var teamScale=this.teamScale;
+        var contactName=this.contactName;
+        var phone=this.phone;
+        var address=this.address;
+        var remark=this.remark;
+        var data={name,account,industry,teamScale,contactName,phone,address,remark}
+        this.$axios
+          .post('/company/',data)
+          .then(response=>{
+            console.log(response);
+          })
+          .catch(err=>{
+            console.log(err);
+          })
       }
+    },
+    beforeCreate(){
+      this.$axios
+          .get('/company/')
+          .then(response=>{
+            console.log(response);
+            var data=response.data;
+            this.name=data.name;
+            this.account=data.account;
+            this.industry=data.industry;
+            this.teamScale=data.teamScale;
+            this.contactName=data.contactName;
+            this.phone=data.phone;
+            this.address=data.address;
+            this.remark=data.remark;
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+    },
+    created(){
+      
     }
 }
 </script>

@@ -6,7 +6,7 @@
         <div v-for="single in systemMsg" class="oneMsg" :key="single.id">
           <el-scrollbar style="height:100%">
           <span class="title">{{single.title}}</span>
-          <span class="time">{{single.time}}</span>
+          <span class="time">{{single.createTime}}</span>
           <br/>
           <span class="content">{{single.content}}</span>
           <el-divider></el-divider>
@@ -37,94 +37,119 @@ export default {
         return{
             activeTab: 'systemMsg',
             systemMsg: [
-              {
-                id: '1',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '2',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '3',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '4',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '5',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '6',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '7',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '8',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              },
-              {
-                id: '9',
-                title: '账户即将到期提醒',
-                time: '2020/09/09 10:55',
-                content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
-              }
+              // {
+              //   id: '1',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '2',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '3',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '4',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '5',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '6',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '7',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '8',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // },
+              // {
+              //   id: '9',
+              //   title: '账户即将到期提醒',
+              //   time: '2020/09/09 10:55',
+              //   content: '系统将于3天后到期，请尽快续费，以免影响您正常使用。'
+              // }
             ],
             noticeMsg: [
-              {
-                id: '1',
-                title: '产品上新通知',
-                time: '2020/09/09 10:55',
-                content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
-              },
-              {
-                id: '2',
-                title: '产品上新通知',
-                time: '2020/09/09 10:55',
-                content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
-              },
-              {
-                id: '3',
-                title: '产品上新通知',
-                time: '2020/09/09 10:55',
-                content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
-              }
+              // {
+              //   id: '1',
+              //   title: '产品上新通知',
+              //   time: '2020/09/09 10:55',
+              //   content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
+              // },
+              // {
+              //   id: '2',
+              //   title: '产品上新通知',
+              //   time: '2020/09/09 10:55',
+              //   content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
+              // },
+              // {
+              //   id: '3',
+              //   title: '产品上新通知',
+              //   time: '2020/09/09 10:55',
+              //   content: 'WCTmm-234号产品将于本月9号正式上新，请客服一组的同事尽快熟悉产品功能介绍。'
+              // }
             ]
         }
     },
     methods: {
       clearAll(){
         // TODO
-        this.$message.success("已清空所有!");
+        this.$axios
+            .delete('/notice/4')
+            .then(response=>{
+              console.log(response)
+              this.$router.go(0)
+              this.$message.success("已清空所有!");
+              
+            })
+            .catch(err=>{
+              this.$message.success("已经没有其他的信息了!");
+              console.log(err)
+            })
+        
       }
     },
-    created(){
+    beforeCreate(){
       this.$axios
-          .get('/notice')
+          .get('/notice/')
           .then(response=>{
-            console.log("这里: "+response);
+            var data = response.data;
+            console.log("这里: ");
+            var allNotice=data.result.Notices;
+            console.log(allNotice);
+            for(var i=0;i<allNotice.length;i++){
+              console.log(allNotice[i].type)
+              if(allNotice[i].type==1){
+                this.systemMsg.push(allNotice[i]);
+              }else{
+                this.noticeMsg.push(allNotice[i]);
+              }
+            }
+            
+            console.log(this.systemMsg)
           })
           .catch(err=>{
             console.log(err);

@@ -54,7 +54,7 @@ export default {
     name: 'AccessStats',
     data() {
         return{
-          tableData:JSON.parse(localStorage.getItem("viewStatisticsData")).result.ViewStatistics,
+          tableData:null,
         }
     },
     beforeCreate:function() {
@@ -64,7 +64,7 @@ export default {
           .then(response=>{
               console.log(response);
               if(response.data.success){
-                localStorage.setItem("viewStatisticsData",JSON.stringify(response.data));
+                this.tableData = response.data.result.ViewStatistics;
               }else{
                 this.$mesasage.error("获取数据错误")
               }

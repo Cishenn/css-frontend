@@ -17,7 +17,7 @@
         </el-date-picker>
       </div>
       <div class="select">
-        <el-select class="selectBox" v-model="groupValue" placeholder="全部客服组">
+        <el-select class="selectBox" v-model="groupValue" >
           <el-option
             v-for="item in groupOptions"
             :key="item.value"
@@ -25,7 +25,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-select class="selectBox" v-model="servicerValue" placeholder="全部客服">
+        <el-select class="selectBox" v-model="servicerValue" >
           <el-option
             v-for="item in servicerOptions"
             :key="item.value"
@@ -34,7 +34,7 @@
           </el-option>
         </el-select>
       </div>
-      <el-button class="statsExportButton">导出当前数据</el-button>
+      <el-button class="statsExportButton" @click = "exportData">导出当前数据</el-button>
     </div>
 
     <div class="checkInTable">
@@ -71,80 +71,44 @@
       name: 'StatisticsOverall',
       data(){
         return{
-          groupOptions: [
-            {
-              value: '全部客服组',
-              label: '全部客服组'
-            },
-            {
-              value: '客服组一',
-              label: '客服组一'
-            },
-            {
-              value: '客服组二',
-              label: '客服组二'
-            },
-            {
-              value: '客服组三',
-              label: '客服组三'
-            },
-          ],
-          servicerOptions: [
-            {
-              value: '全部客服',
-              label: '全部客服'
-            },
-            {
-              value: '李自成',
-              label: '李自成'
-            },
-            {
-              value: '嘎巴伟',
-              label: '嘎巴伟'
-            },
-            {
-              value: '秦副班长',
-              label: '秦副班长'
-            }
-          ],
           groupValue:'',
           servicerValue:'',
           value1:'',
           value2:'',
-          // tableData:
-          // [
-          //   {
-          //     nickName: '客服书记',
-          //     loginTime: '12h',
-          //     freeTime: '3h',
-          //     busyTime: '8h',
-          //     onlineTime: '7h',
-          //     offlineTime:"1h"
-          //   },
-          // ],
           page:null,
           currentPage:1,
-          pageSize:10
+          pageSize:10,
+          servicerOptions:null,
+          groupOptions:null,
+          tableData:null,
+          columns:[
+            {title:'客服昵称',key:'nickName'},
+            {title:'登陆时长',key:'loginTime'},
+            {title:'空闲时长',key:'freeTime'},
+            {title:'忙碌时长',key:'busyTime'},
+            {title:'在线时长',key:'onlineTime'},
+            {title:'离线时长',key:'offlineTime'},
+          ]
         }
       },
       watch:{
         currentPage:function(){
           this.$axios
-          .get(`/attendance_stats/page?currentPage=${this.currentPage}&pageSize=${this.pageSize}`)
+          .get(`/attendance_stats/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
           .then(response=>{
             this.page=response.data
           })
         },
         pageSize:function(){
           this.$axios
-          .get(`/attendance_stats/page?pageSize=${this.pageSize}`)
+          .get(`/attendance_stats/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
           .then(response=>{
             this.page=response.data
           })
         },
         servicerValue:function(){
           this.$axios
-          .get(`/attendance_stats/selectPage?nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+          .get(`/attendance_stats/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
           .then(response=>{
             console.log("servicerPage-->");
             console.log(response);
@@ -153,7 +117,7 @@
         },
         groupValue:function(){
           this.$axios
-          .get(`/attendance_stats/selectPage?nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+          .get(`/attendance_stats/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
           .then(response=>{
             console.log("groupPage-->");
             console.log(response);
@@ -164,16 +128,39 @@
       beforeCreate:function() {
         console.log("--->begin");
         this.$axios
+            .get('/attendance_stats/')
+            .then(response=>{
+                console.log(response);
+                if(response.data.success){
+                  this.tableData = response.data.result.AttendanceStats;
+                }else{
+                  this.$mesasage.error("获取数据错误")
+                }
+            })
+        this.$axios
             .get('/attendance_stats/page')
             .then(response=>{
+                console.log(response);
                 this.page=response.data
+            })
+        this.$axios
+            .get('/attendance_stats/servicerOptions')
+            .then(response=>{
+              console.log("servicerOptions-->");
+              console.log(response.data.result.ElOption);
+              this.servicerOptions=response.data.result.ElOption;
+              this.servicerValue = response.data.result.ElOption[0].value;
+            })
+        this.$axios
+            .get('/attendance_stats/groupOptions')
+            .then(response=>{
+              console.log("-->groupOptions");
+              console.log(response.data.result.ElOption);
+              this.groupOptions=response.data.result.ElOption;
+              this.groupValue = response.data.result.ElOption[0].value;
             })
       },
 
-      created: function(){
-        this.groupValue = this.groupOptions[0].value;
-        this.servicerValue = this.servicerOptions[0].value;
-      },
       methods:{
         currentChange(event){
           this.currentPage = event;
@@ -187,9 +174,14 @@
         handleSizeChange(event){
           this.pageSize = event;
         },
+        exportData(){
+          export2Excel(this.columns,this.tableData)
+        }
       }
 
   }
+
+  import { export2Excel } from '../../../common/js/util'
 </script>
 
 <style scoped>
@@ -253,6 +245,12 @@
     color:rgb(204, 204, 204);
     text-align: center;
     border-radius: 2px;
+  }
+
+  .statsExportButton:hover{
+    background-color: transparent;
+    color: rgb(0,110,255);
+    border: 1px solid rgb(0,110,255);
   }
 
   .el-table{

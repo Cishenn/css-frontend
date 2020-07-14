@@ -70,37 +70,35 @@
           </el-option>
         </el-select>
       </div>
-      <el-button class="statsExportButton">导出当前数据</el-button>
+      <el-button class="statsExportButton" @click = "exportData">导出当前数据</el-button>
     </div>
 
 
     <div class="workQuantityTable">
-      <el-table :data="tableData" tooltip-effect="dark" style="width: 1002px"
+      <el-table :data="page.list" tooltip-effect="dark" style="width: 1002px"
                 :header-cell-style="{'background-color':'#e6f1ff'}">
-        <el-table-column label="客服昵称" prop="servicerName" width="91" align="center"></el-table-column>
-        <el-table-column label="消息总量" prop="allMsgNum" width="130" align="center"></el-table-column>
-        <el-table-column label="会话总量" prop="allSessionNum" width="130" align="center"></el-table-column>
-        <el-table-column label="有效会话数量" prop="validSessionNum" width="130" align="center"></el-table-column>
-        <el-table-column label="结束会话数量" prop="finishedSessionNum" width="130" align="center"></el-table-column>
-        <el-table-column label="会话总时长" prop="allSessionTime" width="130" align="center"></el-table-column>
+        <el-table-column label="客服昵称" prop="nickName" width="91" align="center"></el-table-column>
+        <el-table-column label="消息总量" prop="totalMessageCount" width="130" align="center"></el-table-column>
+        <el-table-column label="会话总量" prop="totalSessionCount" width="130" align="center"></el-table-column>
+        <el-table-column label="有效会话数量" prop="totalEffectiveSessionCount" width="130" align="center"></el-table-column>
+        <el-table-column label="结束会话数量" prop="totalEndSessionCount" width="130" align="center"></el-table-column>
+        <el-table-column label="会话总时长" prop="totalSessionTime" width="130" align="center"></el-table-column>
         <el-table-column label="单会话平均消息数" prop="averageSessionNum" width="130" align="center"></el-table-column>
         <el-table-column label="单会话平均时长" prop="averageSessionTime" width="130" align="center"></el-table-column>
       </el-table>
       <div class="pageJump">
-        <span>共100条</span>
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        <el-select class="pageSelect" v-model="pageValue">
-          <el-option
-            v-for="item in pageOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <span>到第</span>
-        <el-input class="jumpNum" v-model="input" placeholder="1"></el-input>
-        <span>页</span>
-        <el-button type="primary" plain class="buttonJump"><span>确定</span></el-button>
+        <el-pagination v-if="page"
+                       background
+                       layout="total, prev, pager, next,sizes, jumper"
+                       :total="page.total"
+                       :page-size="page.pageSize"
+                       :page-sizes="[10, 20, 30, 40,50]"
+                       :current-page="page.currentPage"
+                       @current-change="currentChange"
+                       @prev-click="prevChange"
+                       @next-click="nextChange"
+                       @size-change="handleSizeChange">
+        </el-pagination>
       </div>
     </div>
 
@@ -112,183 +110,119 @@ export default {
     name: 'WorkQuantityStats',
     data(){
       return{
-        groupOptions: [
-          {
-            value: '选项1',
-            label: '全部客服组'
-          },
-          {
-            value: '选项2',
-            label: '客服组一'
-          },
-          {
-            value: '选项3',
-            label: '客服组二'
-          },
-          {
-            value: '选项4',
-            label: '客服组三'
-          },
-        ],
-        servicerOptions: [
-          {
-            value: '选项1',
-            label: '全部客服'
-          },
-          {
-            value: '选项2',
-            label: '李书记'
-          },
-          {
-            value: '选项3',
-            label: '大锐子'
-          },
-          {
-            value: '选项4',
-            label: '大亮子'
-          }
-        ],
+        groupOptions: null,
+        servicerOptions: null,
         groupValue:'',
         servicerValue:'',
         value1:'',
         value2:'',
-        tableData: [
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          },
-          {
-            servicerName: '客服书记',
-            allMsgNum: '300',
-            allSessionNum: '26',
-            validSessionNum: '18',
-            finishedSessionNum: '10',
-            allSessionTime:"50m",
-            averageSessionNum: '9',
-            averageSessionTime:'9m18s'
-          }
-        ],
-        pageOptions: [
-          {
-            value: '选项1',
-            label: '10条/页'
-          },
-          {
-            value: '选项2',
-            label: '20条/页'
-          },
-          {
-            value: '选项3',
-            label: '30条/页'
-          },
-          {
-            value: '选项4',
-            label: '40条/页'
-          },
-          {
-            value: '选项5',
-            label: '50条/页'
-          }
-        ],
-        pageValue:''
+        page:null,
+        currentPage:1,
+        pageSize:10,
+        tableData:null,
+        columns:[
+          {title:'客服昵称',key:'nickName'},
+          {title:'消息总量',key:'totalMessageCount'},
+          {title:'会话总量',key:'totalSessionCount'},
+          {title:'有效会话数量',key:'totalEffectiveSessionCount'},
+          {title:'结束会话数量',key:'totalEndSessionCount'},
+          {title:'会话总时长',key:'totalSessionTime'},
+          {title:'单会话平均消息数',key:'averageSessionNum'},
+          {title:'单会话平均时长',key:'averageSessionTime'},
+        ]
       }
     },
-    created: function(){
-      this.groupValue = this.groupOptions[0].value;
-      this.servicerValue = this.servicerOptions[0].value;
-      this.pageValue = this.pageOptions[0].value;
+    watch:{
+      currentPage:function(){
+        this.$axios
+        .get(`/workloadStatistics/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+        .then(response=>{
+          this.page=response.data
+        })
+      },
+      pageSize:function(){
+        this.$axios
+        .get(`/workloadStatistics/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+        .then(response=>{
+          this.page=response.data
+        })
+      },
+      servicerValue:function(){
+        this.$axios
+        .get(`/workloadStatistics/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+        .then(response=>{
+          console.log("servicerPage-->");
+          console.log(response);
+          this.page=response.data
+        })
+      },
+      groupValue:function(){
+        this.$axios
+        .get(`/workloadStatistics/selectPage?currentPage=${this.currentPage}&pageSize=${this.pageSize}&nickName=${this.servicerValue}&serviceGroup=${this.groupValue}`)
+        .then(response=>{
+          console.log("groupPage-->");
+          console.log(response);
+          this.page=response.data
+        })
+      },
     },
-    mounted() {
+    beforeCreate:function() {
+      console.log("--->begin");
+      this.$axios
+          .get('/workloadStatistics/')
+          .then(response=>{
+              console.log(response);
+              if(response.data.success){
+                this.tableData = response.data.result.WorkloadStatistics;
+              }else{
+                this.$mesasage.error("获取数据错误")
+              }
+          })
+      console.log("--->begin");
+      this.$axios
+          .get('/workloadStatistics/page')
+          .then(response=>{
+              console.log(response);
+              this.page=response.data
+          })
+      this.$axios
+          .get('/workloadStatistics/servicerOptions')
+          .then(response=>{
+            console.log("servicerOptions-->");
+            console.log(response.data.result.ElOption);
+            this.servicerOptions=response.data.result.ElOption;
+            this.servicerValue = response.data.result.ElOption[0].value;
+          })
+      this.$axios
+          .get('/workloadStatistics/groupOptions')
+          .then(response=>{
+            console.log("-->groupOptions");
+            console.log(response.data.result.ElOption);
+            this.groupOptions=response.data.result.ElOption;
+            this.groupValue = response.data.result.ElOption[0].value;
+          })
+    },
+    updated() {
         this.getEchartData1();
         this.getEchartData2();
     },
     methods: {
+        currentChange(event){
+          this.currentPage = event;
+        },
+        prevChange(event){
+          this.currentPage = event;
+        },
+        nextChange(event){
+          this.currentPage = event;
+        },
+        handleSizeChange(event){
+          this.pageSize = event;
+        },
+        exportData(){
+          export2Excel(this.columns,this.tableData)
+        },
+
         getEchartData1() {
         const chart = this.$refs.message;
         if (chart) {
@@ -392,6 +326,7 @@ export default {
         },
     }
 }
+    import { export2Excel } from '../../../common/js/util'
 </script>
 
 <style scoped>
@@ -472,6 +407,12 @@ export default {
     color:rgb(204, 204, 204);
     text-align: center;
     border-radius: 2px;
+  }
+
+  .statsExportButton:hover{
+    background-color: transparent;
+    color: rgb(0,110,255);
+    border: 1px solid rgb(0,110,255);
   }
 
   .statsSecondRow{

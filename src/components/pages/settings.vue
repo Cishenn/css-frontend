@@ -2,7 +2,7 @@
   <div class="container">
     <el-menu class="settings-menu" 
              router
-             default-active="/settings/personInfo">
+             :default-active="this.$route.path">
         <el-scrollbar style="height:100%">
         <el-menu-item-group>
           <template slot="title">通用设置</template>

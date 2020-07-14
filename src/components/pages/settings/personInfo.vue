@@ -161,6 +161,7 @@ export default {
               .put('/servicer/'+this.servicerId,data)
               .then(response=>{
                 console.log(response)
+                this.$router.go(0);
                 this.$message({
                   type: 'success',
                   message: '已成功更新您的个人信息',
