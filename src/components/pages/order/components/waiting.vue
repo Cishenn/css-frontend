@@ -297,11 +297,11 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
           this.page=response.data
@@ -311,11 +311,11 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
           this.page=response.data
@@ -325,11 +325,11 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
           this.page=response.data
@@ -339,11 +339,11 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
           this.page=response.data
@@ -353,11 +353,11 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
           this.page=response.data
@@ -367,65 +367,60 @@
         this.$axios
         .get(`/work_order/selectPage?currentPage=${this.currentPage}
                                     &pageSize=${this.pageSize}
-                                    &state=${this.statusValue}
+                                    &state=${"处理中"}
                                     &priority=${this.priorityValue}
                                     &type=${this.categoryValue}
                                     &channel=${this.channelValue}
-                                    &nickName=${this.servicerValue}
+                                    &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}
                                     &serviceGroup=${this.groupValue}`)
         .then(response=>{
-          this.page=response.data
+          this.page=response.data;
+          //console.log(response.data);
         })
       },
     },
     beforeCreate:function() {
       console.log("--->begin");
       this.$axios
-          .get('/work_order/page')
+          .get(`/work_order/getOrderTotal?state=${"处理中"}
+                                       &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}`)
           .then(response=>{
-              this.page=response.data;
-              this.servicerValue = JSON.parse(localStorage.getItem("user")).result.nickName;
-          })
-    },
-    created:function(){
-      this.priorityValue = priorityOptions[0].value;
-      this.categoryValue = categoryOptions[0].value;
-      this.channelValue = channelOptions[0].value;
-      this.groupValue = groupOptions[0].value;
-    },
-    updated:function(){
-      this.$axios
-          .get(`/work_order/getOrderTotal?state=${this.statusValue}
-                                           &nickName=${this.servicerValue}`)
-          .then(response=>{
+            this.page=response.data;
+            this.servicerValue = JSON.parse(localStorage.getItem("user")).result.nickName;
+            console.log(response.data);
             this.$emit('sendOrderTotal',response.data.total);
             this.tableData = response.data.result.WorkOrder;
           })
       this.$axios
-          .get(`/work_order/priorityOptionsWith?state=${this.statusValue}
-                                           &nickName=${this.servicerValue}`)
+          .get(`/work_order/priorityOptionsWith?state=${"处理中"}
+                                           &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}`)
           .then(response=>{
             this.priorityOptions=response.data.result.ElOption;
+            this.priorityValue = response.data.result.ElOption[0].value;
           })
       this.$axios
-          .get(`/work_order/typeOptionsWith?state=${this.statusValue}
-                                       &nickName=${this.servicerValue}`)
+          .get(`/work_order/typeOptionsWith?state=${"处理中"}
+                                       &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}`)
           .then(response=>{
             this.categoryOptions=response.data.result.ElOption;
+            this.categoryValue = response.data.result.ElOption[0].value;
           })
       this.$axios
-          .get(`/work_order/channelOptionsWith?state=${this.statusValue}
-                                          &nickName=${this.servicerValue}`)
+          .get(`/work_order/channelOptionsWith?state=${"处理中"}
+                                          &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}`)
           .then(response=>{
             this.channelOptions=response.data.result.ElOption;
+            this.channelValue = response.data.result.ElOption[0].value;
           })
       this.$axios
-          .get(`/work_order/groupOptionsWith?state=${this.statusValue}
-                                        &nickName=${this.servicerValue}`)
+          .get(`/work_order/groupOptionsWith?state=${"处理中"}
+                                        &nickName=${JSON.parse(localStorage.getItem("user")).result.nickName}`)
           .then(response=>{
             this.groupOptions=response.data.result.ElOption;
+            this.groupValue = response.data.result.ElOption[0].value;
           })
     },
+
 
     methods:{
       check(){
