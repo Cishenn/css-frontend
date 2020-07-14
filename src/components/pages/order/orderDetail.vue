@@ -44,6 +44,35 @@
       receiveOrderTotal(val){
         this.orderTotal = val;
       },
+      
+      createWorkOrder() {
+        this.visibleA.workOrderVisible = true;
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+        console.log(this.$refs[formName]);
+      },
+
+      cancelForm(vis){
+        this.visibleA[vis] = false;
+      },
+
+      submitForm(formName, vis){
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$refs[formName].resetFields();
+            this.visibleA[vis] = false;
+            // alert('submit!');
+            this.$message({
+              type: 'success',
+              message: '操作成功！'
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
       receiveWaitingTotal(val){
         this.myWaitingTotal = val;
       }

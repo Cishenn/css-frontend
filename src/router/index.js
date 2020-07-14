@@ -58,6 +58,9 @@ import WorkQualityStats from '@/components/pages/statistics/WorkQualityStats'
 import WorkQuantityStats from '@/components/pages/statistics/WorkQuantityStats'
 import { registerMap } from 'echarts'
 
+//dialog
+import DialogList from '@/components/pages/dialog/Aside'
+
 //dialog iconfont import
 import '../assets/iconfont-d/iconfont.css'
 // import { component } from 'vue/types/umd'

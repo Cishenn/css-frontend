@@ -111,7 +111,7 @@
         <el-row :gutter="25">
           <el-col :span="2"></el-col>
           <el-col :span="4"><span class="input-label">公司地址:</span></el-col>
-          <el-col :span="10"><el-input v-model="addr" placeholder="请输入"></el-input></el-col>
+          <el-col :span="10"><el-input v-model="address" placeholder="请输入"></el-input></el-col>
         </el-row>
         <br/>
         <el-row :gutter="25">
@@ -216,7 +216,7 @@ export default {
     },
     beforeCreate(){
       this.$axios
-          .get('/company/')
+          .get('/company/1')
           .then(response=>{
             console.log(response);
             var data=response.data;

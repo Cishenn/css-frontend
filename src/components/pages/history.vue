@@ -431,7 +431,7 @@
                         <span class="row-two">2020/06/09 20:09</span>
                       </div>
                       <div class="his-order-view">
-                        <span class="view-button">
+                        <span class="view-button" @click="viewWorkOrderDetails">
                           <span>查看工单详情</span>
                           <i class="el-icon-arrow-right"></i>
                         </span>
@@ -643,7 +643,7 @@
 
 <script>
 export default {
-    name: 'Dialog',
+    name: 'History',
     data(){
         return {
             isActive: 0,
@@ -816,6 +816,9 @@ export default {
 
       handleAvatarSuccess: function() {
 
+      },
+      viewWorkOrderDetails() {
+        this.$router.push('/specificOrder');
       },
 
       createWorkOrder() {
