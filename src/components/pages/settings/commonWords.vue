@@ -40,8 +40,7 @@
               v-model="inputValue[mycwinx]"
               :ref="'savetaginput'+mycwinx"
               size="small"
-              @keyup.enter.native="handleInputConfirm(1, mycwinx)"
-              @blur="handleInputConfirm(1, mycwinx)"
+              @change="handleInputConfirm(1, mycwinx)"
             >
             </el-input>
             <el-button :key="'1-2-' + mycwinx" v-else class="button-new-tag" size="small" @click="showInput(1, mycwinx,'savetaginput')">增加常用语</el-button>
@@ -88,8 +87,7 @@
               v-model="pubInputValue[cwinx]"
               ref="pubsaveaaginput"
               size="small"
-              @keyup.enter.native="handleInputConfirm(2, cwinx)"
-              @blur="handleInputConfirm(2, cwinx)"
+              @change="handleInputConfirm(2, cwinx)"
             >
             </el-input>
             <el-button :key="'2-2-'+cwinx" v-else class="button-new-tag" size="small" @click="showInput(2, cwinx, 'pubsavetaginput')">增加常用语</el-button>
@@ -257,10 +255,12 @@ export default {
         if(libs == 1){
           inputValue = this.inputValue[inx];
           this.$set(this.inputVisible, inx, false);
+          this.$set(this.inputValue, inx, "");
         }
         else{
           inputValue = this.pubInputValue[inx];
           this.$set(this.pubInputVisible, inx, false);
+          this.$set(this.pubInputValue, inx, "");
         }
         let data = {
           content: inputValue,

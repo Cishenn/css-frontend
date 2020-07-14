@@ -54,159 +54,23 @@
                 <div class="more" @click="moremsg()">
                   <span>更多记录</span>
                 </div>
-                <div class="s-msg customer">
+
+                <div class="s-msg"    v-for="(msg, msginx) in msgs"  v-bind:class="{ customer: msg.fromVisitor == true, servicer: msg.fromVisitor == false }" :key="msginx">
                   <div class="s-c-img">
                     <i class="el-icon-chat-dot-round"></i>
                   </div>
                   <div class="s-c-info">
                     <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
+                      <span class="title-name">{{msg.fromVisitor == true?name:"客服小a"}}</span>
+                      <span class="title time">{{msg.sendTime}}</span>
                     </div>
                     <div class="s-c-i-content">
                       <span style="">
-                        您好，请问有什么可以帮助您呢？请问有什么可以帮助您呢请问有什么可以帮助您呢请问有什么可以帮助您呢请问有什么可以帮助您呢
+                        {{msg.content}}
                       </span>
                     </div>
                   </div>
                 </div>
-
-                <div class="s-msg customer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span style="">
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="s-msg servicer">
-                  <div class="s-c-img">
-                    <i class="el-icon-chat-dot-round"></i>
-                  </div>
-                  <div class="s-c-info">
-                    <div class="s-c-i-title">
-                      <span class="title-name">北京客户</span>
-                      <span class="title time">2020/06/09 12:10</span>
-                    </div>
-                    <div class="s-c-i-content">
-                      <span>
-                        您好，请问有什么可以帮助您呢？
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
 
               </div>
 
@@ -233,10 +97,10 @@
 
                 </div>
                 <div class="inputArea">
-                  <textarea placeholder="请输入内容" class="textarea" name="" id="input-content" cols="" rows=""></textarea>
+                  <textarea placeholder="请输入内容" v-model="content" class="textarea" name="" id="input-content" cols="" rows=""></textarea>
                 </div>
                 <div class="commit">
-                  <el-button native-type="submit" class="c-button" type="primary">发送</el-button>
+                  <el-button @click="sendMsg" native-type="submit" class="c-button" type="primary">发送</el-button>
                 </div>
               </div>
 
@@ -651,6 +515,15 @@ export default {
     // props: ["cws"],
     data(){
         return {
+          name: "安徽客户",
+          ciId: null,
+          userId: "2",
+          socket: null,
+          msgs: [
+
+          ],
+          sessionId: 1,
+          content: "",
             cwmy: [
 
             ],
@@ -666,7 +539,7 @@ export default {
               phone: "13555642235",
               email: "1280124514@qq.com",
               company: "伟家公司",
-              address: "北京朝阳",
+              address: "安徽合肥",
               level: "普通客户",
               source: "访客转化",
               tag: [
@@ -729,12 +602,12 @@ export default {
               reason: "",
             },
             customerInfoForm: {
-              nickName: "北京客户",
+              nickName: "安徽客户",
               realName: "王伟",
               phone: "13555642235",
               email: "1280124514@qq.com",
               company: "伟家公司",
-              address: "北京朝阳",
+              address: "安徽合肥",
               level: "普通客户",
               source: "访客转化",
               tag: ["上市公司",
@@ -800,9 +673,74 @@ export default {
       this.getcw(1);
       this.getcw(2);
       // this.getHistoryWorkOrder();
+      this.initWebsocket();
     },
 
     methods: {
+      initWebsocket:function(){
+      		if(typeof(WebSocket) == "undefined") {
+      		    console.log("您的浏览器不支持WebSocket");
+      		}
+          else{
+            console.log("您的浏览器支持WebSocket");
+            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+            // var userId = JSON.parse(localStorage.getItem("user")).id;
+            var socketUrl="ws://localhost:8080/ccs/session/"+1+"/message";
+            // var socketUrl="ws://192.168.0.231:22599/webSocket/"+userId;
+            console.log(socketUrl);
+            if(this.socket!=null){
+                this.socket.close();
+                this.socket=null;
+            }
+            this.socket = new WebSocket(socketUrl);
+            //打开事件
+            this.socket.onopen = function() {
+                console.log("websocket已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            //获得消息事件
+            this.socket.onmessage = (resp)=> {
+            /* debugger */
+                //当接收到websocket服务器发送当消息当时候，判断消息是会话列表有更新还是会话消息有更新，更新对应当子组件
+            console.log("onmesg");
+            let msg = JSON.parse(resp.data);
+            msg = msg.result;
+            console.log(msg);
+            if(msg.content != null){
+              this.msgs.push(msg);
+            }
+
+            // if(msg.csId){//第一次连接的时候，websocket服务器会返回服务的客服id
+            //   this.csId = msg.csId;
+            // }
+            // if(msg.sessionId){//第一次连接的时候，websocket服务器会返回会话id
+            //   this.sessionId = msg.sessionId;
+            // }
+            };
+            //关闭事件
+            this.socket.onclose = function() {
+                console.log("websocket已关闭");
+            };
+            //发生了错误事件
+            this.socket.onerror = function() {
+                console.log("websocket发生了错误");
+            }
+      		}
+      },
+      sendMsg: function() {
+        let msg ={
+        	content: this.content,
+        	fromVisitor: false,
+        	sessionMsgId: 1,
+        	sessionId: this.sessionId,
+        	sendTime:new Date().format('yyyy-MM-dd hh:mm:ss')
+        }
+        if(msg.content != null){
+          this.socket.send(JSON.stringify(msg));
+          // this.msgs.push(msg);
+        }
+        this.content= "";
+      },
       getcw(libs) {
         this.$axios.
         get('/commonword/onelib', {
@@ -1198,12 +1136,14 @@ export default {
   box-shadow: rgb(204, 204, 204) 0px 0px 5px 0px;
   border-radius: 4px;
   display: inline-block;
+  text-align: left;
 
 
 }
 
 .servicer{
   flex-direction: row-reverse;
+  text-align: right;
 }
 
 .s-c-i-content span{
