@@ -45,7 +45,7 @@
             <el-form-item class="wo-form-item" label="工单描述" :label-width="woFormLabelWidth" prop="desc">
               <el-input type="textarea" width="314px" :rows="6" resize="none" class="ftextarea wo-form-item-in" v-model="workOrderForm.desc" placeholder="请输入工单描述"></el-input>
             </el-form-item>
-            <el-upload action="#" class="el-icon-paperclip wo-upload" >添加附件（最多上传5个附件，单个文件最大20M）</el-upload>
+            <el-upload action="#" :http-request="handleUpLoadRequest" class="el-icon-paperclip wo-upload" >添加附件（最多上传5个附件，单个文件最大20M）</el-upload>
             <el-form-item class="wo-form-item" label="抄送人" :label-width="woFormLabelWidth" prop="cclist">
               <el-select class="wo-form-item-in" v-model="workOrderForm.cclist" placeholder="请选择抄送人">
                 <div class="search">
@@ -172,7 +172,13 @@
         }
     },
     methods:{
-
+      handleUpLoadRequest(file) {
+          console.log('http://customer-service-backend.oss-cn-hangzhou.aliyuncs.com/assets/excel.xlsx');
+          this.$message({
+                    message: "附件上传成功: http://customer-service-backend.oss-cn-hangzhou.aliyuncs.com/assets/excel.xlsx",
+                    type: "success"
+                  });
+      },
       createWorkOrder() {
         this.visibleA.workOrderVisible = true;
       },
