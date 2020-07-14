@@ -34,7 +34,7 @@
           </el-option>
         </el-select>
       </div>
-      <el-button class="statsExportButton">导出当前数据</el-button>
+      <el-button class="statsExportButton" @click = "exportData">导出当前数据</el-button>
     </div>
 
     <div class="checkInTable">
@@ -80,6 +80,15 @@
           pageSize:10,
           servicerOptions:null,
           groupOptions:null,
+          tableData:null,
+          columns:[
+            {title:'客服昵称',key:'nickName'},
+            {title:'登陆时长',key:'loginTime'},
+            {title:'空闲时长',key:'freeTime'},
+            {title:'忙碌时长',key:'busyTime'},
+            {title:'在线时长',key:'onlineTime'},
+            {title:'离线时长',key:'offlineTime'},
+          ]
         }
       },
       watch:{
@@ -119,6 +128,16 @@
       beforeCreate:function() {
         console.log("--->begin");
         this.$axios
+            .get('/attendance_stats/')
+            .then(response=>{
+                console.log(response);
+                if(response.data.success){
+                  this.tableData = response.data.result.AttendanceStats;
+                }else{
+                  this.$mesasage.error("获取数据错误")
+                }
+            })
+        this.$axios
             .get('/attendance_stats/page')
             .then(response=>{
                 console.log(response);
@@ -155,9 +174,14 @@
         handleSizeChange(event){
           this.pageSize = event;
         },
+        exportData(){
+          export2Excel(this.columns,this.tableData)
+        }
       }
 
   }
+
+  import { export2Excel } from '../../../common/js/util'
 </script>
 
 <style scoped>

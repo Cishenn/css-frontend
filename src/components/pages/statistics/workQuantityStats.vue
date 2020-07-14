@@ -70,7 +70,7 @@
           </el-option>
         </el-select>
       </div>
-      <el-button class="statsExportButton">导出当前数据</el-button>
+      <el-button class="statsExportButton" @click = "exportData">导出当前数据</el-button>
     </div>
 
 
@@ -119,6 +119,17 @@ export default {
         page:null,
         currentPage:1,
         pageSize:10,
+        tableData:null,
+        columns:[
+          {title:'客服昵称',key:'nickName'},
+          {title:'消息总量',key:'totalMessageCount'},
+          {title:'会话总量',key:'totalSessionCount'},
+          {title:'有效会话数量',key:'totalEffectiveSessionCount'},
+          {title:'结束会话数量',key:'totalEndSessionCount'},
+          {title:'会话总时长',key:'totalSessionTime'},
+          {title:'单会话平均消息数',key:'averageSessionNum'},
+          {title:'单会话平均时长',key:'averageSessionTime'},
+        ]
       }
     },
     watch:{
@@ -156,6 +167,17 @@ export default {
       },
     },
     beforeCreate:function() {
+      console.log("--->begin");
+      this.$axios
+          .get('/workloadStatistics/')
+          .then(response=>{
+              console.log(response);
+              if(response.data.success){
+                this.tableData = response.data.result.WorkloadStatistics;
+              }else{
+                this.$mesasage.error("获取数据错误")
+              }
+          })
       console.log("--->begin");
       this.$axios
           .get('/workloadStatistics/page')
@@ -197,7 +219,10 @@ export default {
         handleSizeChange(event){
           this.pageSize = event;
         },
-      
+        exportData(){
+          export2Excel(this.columns,this.tableData)
+        },
+
         getEchartData1() {
         const chart = this.$refs.message;
         if (chart) {
@@ -301,6 +326,7 @@ export default {
         },
     }
 }
+    import { export2Excel } from '../../../common/js/util'
 </script>
 
 <style scoped>
@@ -382,7 +408,7 @@ export default {
     text-align: center;
     border-radius: 2px;
   }
-  
+
   .statsExportButton:hover{
     background-color: transparent;
     color: rgb(0,110,255);

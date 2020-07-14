@@ -138,7 +138,7 @@ export default new Router({
                 },
                 {
                     path: 'order',
-                    redirect: 'order/allorder',
+                    redirect: 'order/allOrder',
                     component: Order,
                     children: [
                       {
@@ -196,6 +196,7 @@ export default new Router({
                 },
                 {
                     path: 'settings',
+                    redirect: 'settings/personInfo',
                     component: Settings,
                     children: [,
                         {

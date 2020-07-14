@@ -79,7 +79,7 @@
           </el-option>
         </el-select>
       </div>
-      <el-button class="statsExportButton">导出当前数据</el-button>
+      <el-button class="statsExportButton" @click = "exportData">导出当前数据</el-button>
     </div>
 
 
@@ -130,7 +130,20 @@ export default {
           value2:'',
           page:null,
           currentPage:1,
-          pageSize:10
+          pageSize:10,
+          tableData:null,
+          columns:[
+            {title:'客服昵称',key:'nickName'},
+            {title:'有效会话数量',key:'effectiveSessionCount'},
+            {title:'首次平均响应时长',key:'firstAverageTime'},
+            {title:'平均响应时长',key:'averageTime'},
+            {title:'已解决',key:'resolved'},
+            {title:'未解决',key:'unsolved'},
+            {title:'好评',key:'goodReview'},
+            {title:'中评',key:'mediumReview'},
+            {title:'差评',key:'badReview'},
+            {title:'未评',key:'noReview'},
+          ]
         }
 
     },
@@ -169,6 +182,17 @@ export default {
       },
     },
     beforeCreate:function() {
+      console.log("--->begin");
+      this.$axios
+          .get('/workQualityStatistics/')
+          .then(response=>{
+              console.log(response);
+              if(response.data.success){
+                this.tableData = response.data.result.WorkQualityStatistics;
+              }else{
+                this.$mesasage.error("获取数据错误")
+              }
+          })
       console.log("--->begin");
       this.$axios
           .get('/workQualityStatistics/page')
@@ -428,8 +452,12 @@ export default {
         handleSizeChange(event){
           this.pageSize = event;
         },
+        exportData(){
+          export2Excel(this.columns,this.tableData)
+        }
     }
 }
+    import { export2Excel } from '../../../common/js/util'
 </script>
 
 <style scoped>
