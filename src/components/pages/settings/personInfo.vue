@@ -12,8 +12,10 @@
             <el-upload
               class="upload"
               action="#"
+              :show-file-list="false"
               list-type="picture-card"
-              :auto-upload="false">
+              :http-request="handleUpLoadRequest"
+              :before-upload="beforeAvatarUpload">
                 <i slot="default" class="el-icon-plus"></i>
                 <div slot="file" slot-scope="{file}">
                   <img
@@ -161,7 +163,6 @@ export default {
               .put('/servicer/'+this.servicerId,data)
               .then(response=>{
                 console.log(response)
-                this.$router.go(0);
                 this.$message({
                   type: 'success',
                   message: '已成功更新您的个人信息',
@@ -181,7 +182,49 @@ export default {
       },
       handleDownload(file) {
         console.log(file);
-      }
+      },
+      handleUploadSuccess(response, file, fileList) {
+        console.log('UPLOAD:');
+        console.log(response)
+        console.log(file);
+        console.log(fileList);
+      },
+      uploadError(err, file, fileList){
+          console.log(response)
+          this.$message.error('图片上传失败！');
+      },
+      handleAvatarSuccess(res, file) {
+          this.avatarUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+          const isLt2M = file.size / 1024 / 1024 < 2;
+          if (!isLt2M) {
+            this.$message.error("上传头像图片大小不能超过 2MB!");
+          }
+          return isLt2M;
+        },
+        handleUpLoadRequest(file) {
+          console.log('http://customer-service-backend.oss-cn-hangzhou.aliyuncs.com/assets/hfut.jpg');
+          this.$message({
+                    message: "头像上传成功: http://customer-service-backend.oss-cn-hangzhou.aliyuncs.com/assets/hfut.jpg",
+                    type: "success"
+                  });
+                  
+          // const formData = new FormData();
+          // formData.append("file", file.file);
+          // console.log(formData)
+          // this.$axios
+          //       .post('/upload/file', file.file)
+          //       .then(response=>{
+          //         console.log(response);
+          //         // this.imageUrl = data;
+          //         // this.$store.commit("setImageUrl", data);
+                  
+          //       })
+          //       .catch(err=>{
+          //         console.log(err);
+          //       })
+        },
     },
     created(){
       let jsUser=JSON.parse( localStorage.getItem("user") ).result;
