@@ -1,0 +1,58 @@
+{
+  "id": "1915989",
+  "name": "ycs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5485666",
+      "name": "图片",
+      "font_class": "tupian1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "1151051",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "2187789",
+      "name": "表情",
+      "font_class": "biaoqing",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "3287473",
+      "name": "创建",
+      "font_class": "icon-",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "5900851",
+      "name": "撤回色块",
+      "font_class": "chehuisekuai",
+      "unicode": "ec45",
+      "unicode_decimal": 60485
+    },
+    {
+      "icon_id": "6184951",
+      "name": "拉黑",
+      "font_class": "lahei",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "6468302",
+      "name": "结束",
+      "font_class": "jieshu",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    }
+  ]
+}
